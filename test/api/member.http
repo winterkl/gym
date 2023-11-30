@@ -1,0 +1,21 @@
+### Получить список участников
+GET http://localhost:3000/v1/member-list
+Authorization: {{token}}
+
+### Получить участника
+GET http://localhost:3000/v1/member-list/1
+Authorization: {{token}}
+
+### Обновить участника
+PUT http://localhost:3000/v1/member-list/1
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "password" : "vlf857flb7f6-bh52n7g7dg724d78n6d",
+  "fio": "Кирилл Лагутин"
+}
+
+### Удалить участника
+DELETE http://localhost:3000/v1/member-list/1
+Authorization: {{token}}

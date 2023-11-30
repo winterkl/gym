@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS members CASCADE;
+DROP TABLE IF EXISTS subscriptions CASCADE;
+DROP TABLE IF EXISTS member_subscriptions CASCADE;
