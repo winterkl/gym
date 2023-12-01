@@ -1,4 +1,4 @@
-package model
+package member_model
 
 import "awesomeProject/internal/domain/member/entity"
 
@@ -21,14 +21,14 @@ func NewCreateMemberDTO(login, password, fio string) CreateMemberDTO {
 		FIO:      fio,
 	}
 }
-func NewGetMemberResponse(member entity.Member) GetMemberDTO {
+func NewGetMemberResponse(member member_entity.Member) GetMemberDTO {
 	return GetMemberDTO{
 		ID:    member.ID,
 		Login: member.Login,
 		FIO:   member.FIO,
 	}
 }
-func NewGetMemberListResponse(memberList []entity.Member) []GetMemberDTO {
+func NewGetMemberListResponse(memberList []member_entity.Member) []GetMemberDTO {
 	memberListDTO := []GetMemberDTO{}
 	for _, member := range memberList {
 		memberListDTO = append(memberListDTO, NewGetMemberResponse(member))

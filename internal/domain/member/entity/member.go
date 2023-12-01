@@ -1,4 +1,4 @@
-package entity
+package member_entity
 
 type Member struct {
 	ID       int `bun:"id,pk,autoincrement"`

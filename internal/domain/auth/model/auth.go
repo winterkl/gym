@@ -1,4 +1,4 @@
-package model
+package auth_model
 
 type MemberPayload struct {
 	ID    int    `json:"id"`

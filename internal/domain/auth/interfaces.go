@@ -6,6 +6,6 @@ import (
 )
 
 type UseCase interface {
-	SignUp(ctx context.Context, dto model.SignUpInputDTO) error
-	SignIn(ctx context.Context, dto model.SignInInputDTO) (model.SignInOutputDTO, error)
+	SignUp(ctx context.Context, dto auth_model.SignUpInputDTO) error
+	SignIn(ctx context.Context, dto auth_model.SignInInputDTO) (auth_model.SignInOutputDTO, error)
 }

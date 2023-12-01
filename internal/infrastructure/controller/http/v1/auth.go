@@ -25,7 +25,7 @@ func NewAuthRoutes(handler *gin.RouterGroup, authUC auth.UseCase) {
 }
 
 func (r *authRoutes) signIn(ctx *gin.Context) {
-	userDTO := model.SignInInputDTO{}
+	userDTO := auth_model.SignInInputDTO{}
 	if err := ctx.ShouldBindJSON(&userDTO); err != nil {
 		response.SendValidErrorRequest(ctx, err.Error())
 		return
@@ -39,7 +39,7 @@ func (r *authRoutes) signIn(ctx *gin.Context) {
 	response.SendOkRequestWithData(ctx, authData)
 }
 func (r *authRoutes) signUp(ctx *gin.Context) {
-	userDTO := model.SignUpInputDTO{}
+	userDTO := auth_model.SignUpInputDTO{}
 	if err := ctx.ShouldBindJSON(&userDTO); err != nil {
 		response.SendValidErrorRequest(ctx, err.Error())
 		return

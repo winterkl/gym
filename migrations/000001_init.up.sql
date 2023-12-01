@@ -12,6 +12,18 @@ create table if not exists members
     fio varchar(100) not null
 );
 
+-- ТРЕНЕРЫ -- ТРЕНЕРЫ -- ТРЕНЕРЫ -- ТРЕНЕРЫ --
+
+create table if not exists trainers
+(
+    id        serial
+        constraint trainer_pk
+            primary key,
+    member_id integer not null
+        constraint trainer_members_id_fk
+            references members
+);
+
 -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ --
 
 create table if not exists subscriptions

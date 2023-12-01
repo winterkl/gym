@@ -29,7 +29,7 @@ func NewMemberRouter(handler *gin.RouterGroup, memberUC member.UseCase) {
 }
 
 func (r *memberRoutes) createMember(ctx *gin.Context) {
-	memberDTO := model.CreateMemberDTO{}
+	memberDTO := member_model.CreateMemberDTO{}
 	if err := ctx.ShouldBindJSON(&memberDTO); err != nil {
 		response.SendValidErrorRequest(ctx, err.Error())
 		return
@@ -67,7 +67,7 @@ func (r *memberRoutes) updateMember(ctx *gin.Context) {
 		response.SendValidErrorRequest(ctx, err)
 		return
 	}
-	memberDTO := model.UpdateMemberDTO{ID: memberID}
+	memberDTO := member_model.UpdateMemberDTO{ID: memberID}
 	if err = ctx.ShouldBindJSON(&memberDTO); err != nil {
 		response.SendValidErrorRequest(ctx, err.Error())
 		return

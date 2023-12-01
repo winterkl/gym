@@ -2,10 +2,12 @@ package app
 
 import (
 	"awesomeProject/config"
-	auth_usecase "awesomeProject/internal/domain/auth/usecase"
+	"awesomeProject/internal/domain/auth/usecase"
 	"awesomeProject/internal/domain/member/usecase"
+	trainer_usecase "awesomeProject/internal/domain/trainer/usecase"
 	v1 "awesomeProject/internal/infrastructure/controller/http/v1"
-	member_repository "awesomeProject/internal/infrastructure/repository/member"
+	"awesomeProject/internal/infrastructure/repository/member"
+	"awesomeProject/internal/infrastructure/repository/trainer"
 	"awesomeProject/pkg/http_server"
 	"awesomeProject/pkg/jwt_auth"
 	"awesomeProject/pkg/postgres"
@@ -41,6 +43,7 @@ func (app *App) Run() {
 
 	// Инициализация Repository
 	memberRepo := member_repository.NewMemberRepository(app.db)
+	trainerRepo := trainer_repository.NewTrainerRepository(app.db)
 
 	// Инициализация пакета JWT
 	jwtAuth := jwt_auth.NewJwtAuth(app.jwtAuthKey)
@@ -49,8 +52,9 @@ func (app *App) Run() {
 	memberUC := member_usecase.NewMemberUseCase(memberRepo)
 
 	useCaseList := v1.UC{
-		MemberUC: memberUC,
-		AuthUC:   auth_usecase.NewAuthUseCase(memberUC, jwtAuth),
+		MemberUC:  memberUC,
+		TrainerUC: trainer_usecase.NewTrainerUseCase(trainerRepo),
+		AuthUC:    auth_usecase.NewAuthUseCase(memberUC, jwtAuth),
 	}
 
 	// Инициализация Router

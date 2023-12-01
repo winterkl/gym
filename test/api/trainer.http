@@ -1,0 +1,16 @@
+### Создать тренера
+POST http://localhost:3000/v1/trainer-list
+Content-Type: application/json
+Authorization: {{token}}
+
+### Получить тренера
+GET http://localhost:3000/v1/trainer-list/1
+Authorization: {{token}}
+
+### Получить список тренера
+GET http://localhost:3000/v1/trainer-list
+Authorization: {{token}}
+
+### Удалить тренера
+DELETE http://localhost:3000/v1/trainer-list/4
+Authorization: {{token}}
