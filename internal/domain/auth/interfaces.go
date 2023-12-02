@@ -1,7 +1,7 @@
 package auth
 
 import (
-	"awesomeProject/internal/domain/auth/model"
+	auth_model "awesomeProject/internal/domain/auth/model"
 	"context"
 )
 

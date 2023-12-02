@@ -2,8 +2,8 @@ package member_usecase
 
 import (
 	"awesomeProject/internal/domain/member"
-	"awesomeProject/internal/domain/member/entity"
-	"awesomeProject/internal/domain/member/model"
+	member_entity "awesomeProject/internal/domain/member/entity"
+	member_model "awesomeProject/internal/domain/member/model"
 	"context"
 	"fmt"
 )

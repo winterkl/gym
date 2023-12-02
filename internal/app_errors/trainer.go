@@ -1,8 +1,6 @@
 package app_errors
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type TrainerNotFound struct {
 	ID int

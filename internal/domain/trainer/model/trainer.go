@@ -1,6 +1,6 @@
 package trainer_model
 
-import "awesomeProject/internal/domain/trainer/entity"
+import trainer_entity "awesomeProject/internal/domain/trainer/entity"
 
 type CreateTrainerDTO struct {
 	MemberID int `json:"member_id" binding:"required"`

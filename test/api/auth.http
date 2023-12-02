@@ -3,9 +3,9 @@ POST http://localhost:3000/v1/auth/sign-up
 Content-Type: application/json
 
 {
-  "login": "winterkl",
+  "login": "iheu",
   "password": "d8578edf8458ce06fbc5bb76a58c5ca4",
-  "fio": "Кирилл Лагутин Андреевич"
+  "fio": "Никита Дружинин Андреевич"
 }
 
 ### Авторизация
@@ -13,6 +13,6 @@ POST http://localhost:3000/v1/auth/sign-in
 Content-Type: application/json
 
 {
-  "login": "winterkl",
-  "password": "Кирилл Лагутин"
+  "login": "iheu",
+  "password": "d8578edf8458ce06fbc5bb76a58c5ca4"
 }

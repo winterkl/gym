@@ -3,7 +3,7 @@ package v1
 import (
 	"awesomeProject/internal/app_errors"
 	"awesomeProject/internal/domain/member"
-	"awesomeProject/internal/domain/member/model"
+	member_model "awesomeProject/internal/domain/member/model"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"
 	"github.com/gin-gonic/gin"

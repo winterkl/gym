@@ -3,7 +3,7 @@ package middleware
 import (
 	"awesomeProject/internal/app_errors"
 	"awesomeProject/internal/domain/auth"
-	"awesomeProject/internal/domain/auth/model"
+	auth_model "awesomeProject/internal/domain/auth/model"
 	"awesomeProject/internal/domain/member"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"

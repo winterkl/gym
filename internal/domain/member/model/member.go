@@ -1,6 +1,6 @@
 package member_model
 
-import "awesomeProject/internal/domain/member/entity"
+import member_entity "awesomeProject/internal/domain/member/entity"
 
 type CreateMemberDTO struct {
 	Login    string `json:"login" binding:"required"`

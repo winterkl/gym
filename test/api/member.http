@@ -13,9 +13,9 @@ Authorization: {{token}}
 
 {
   "password" : "vlf857flb7f6-bh52n7g7dg724d78n6d",
-  "fio": "Кирилл Лагутин"
+  "fio": "Кирилл Лагутин Андреевич"
 }
 
 ### Удалить участника
-DELETE http://localhost:3000/v1/member-list/1
+DELETE http://localhost:3000/v1/member-list/2
 Authorization: {{token}}

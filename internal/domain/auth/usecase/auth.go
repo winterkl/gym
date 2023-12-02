@@ -3,9 +3,9 @@ package auth_usecase
 import (
 	"awesomeProject/internal/app_errors"
 	"awesomeProject/internal/domain/auth"
-	"awesomeProject/internal/domain/auth/model"
+	auth_model "awesomeProject/internal/domain/auth/model"
 	"awesomeProject/internal/domain/member"
-	"awesomeProject/internal/domain/member/model"
+	member_model "awesomeProject/internal/domain/member/model"
 	"context"
 	"errors"
 	"fmt"

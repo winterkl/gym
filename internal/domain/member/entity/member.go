@@ -14,7 +14,7 @@ func NewMemberFromCreate(login, password, fio string) Member {
 		FIO:      fio,
 	}
 }
-func NewMemberFromUpdate(memberID int, fio, password string) Member {
+func NewMemberFromUpdate(memberID int, password, fio string) Member {
 	return Member{
 		ID:       memberID,
 		Password: password,

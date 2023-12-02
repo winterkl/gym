@@ -2,7 +2,7 @@ package member_repository
 
 import (
 	"awesomeProject/internal/app_errors"
-	"awesomeProject/internal/domain/member/entity"
+	member_entity "awesomeProject/internal/domain/member/entity"
 	"awesomeProject/pkg/postgres"
 	"context"
 	"database/sql"
@@ -76,7 +76,7 @@ func (r *MemberRepository) UpdateMember(ctx context.Context, member member_entit
 func (r *MemberRepository) DeleteMember(ctx context.Context, memberID int) error {
 	if _, err := r.db.NewDelete().Model((*member_entity.Member)(nil)).
 		Where("id = ?", memberID).Exec(ctx); err != nil {
-		return fmt.Errorf("MemberRepository - DeletMember - NewDelete: %w", err)
+		return fmt.Errorf("MemberRepository - DeleteMember - NewDelete: %w", err)
 	}
 	return nil
 }

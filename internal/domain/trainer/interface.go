@@ -1,8 +1,8 @@
 package trainer
 
 import (
-	"awesomeProject/internal/domain/trainer/entity"
-	"awesomeProject/internal/domain/trainer/model"
+	trainer_entity "awesomeProject/internal/domain/trainer/entity"
+	trainer_model "awesomeProject/internal/domain/trainer/model"
 	"context"
 )
 

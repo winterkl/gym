@@ -2,7 +2,7 @@ package trainer_repository
 
 import (
 	"awesomeProject/internal/app_errors"
-	"awesomeProject/internal/domain/trainer/entity"
+	trainer_entity "awesomeProject/internal/domain/trainer/entity"
 	"awesomeProject/pkg/postgres"
 	"context"
 	"database/sql"
@@ -32,8 +32,8 @@ func (r *TrainerRepository) CreateTrainer(ctx context.Context, trainer trainer_e
 }
 func (r *TrainerRepository) GetTrainer(ctx context.Context, trainerID int) (trainer_entity.Trainer, error) {
 	var trainer trainer_entity.Trainer
-	if err := r.db.NewSelect().Model(trainer).Relation("member").
-		Where("id = ?", trainerID).Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&trainer).Relation("Member").
+		Where("trainer.id = ?", trainerID).Scan(ctx); err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return trainer, &app_errors.TrainerNotFound{ID: trainerID}
 		}
@@ -43,7 +43,7 @@ func (r *TrainerRepository) GetTrainer(ctx context.Context, trainerID int) (trai
 }
 func (r *TrainerRepository) GetTrainerList(ctx context.Context) ([]trainer_entity.Trainer, error) {
 	trainerList := []trainer_entity.Trainer{}
-	if err := r.db.NewSelect().Model(&trainerList).Scan(ctx); err != nil {
+	if err := r.db.NewSelect().Model(&trainerList).Relation("Member").Scan(ctx); err != nil {
 		return []trainer_entity.Trainer{}, fmt.Errorf("TrainerRepository - GetTrainerList - NewSelect: %w", err)
 	}
 	return trainerList, nil

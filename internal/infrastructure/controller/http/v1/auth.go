@@ -3,7 +3,7 @@ package v1
 import (
 	"awesomeProject/internal/app_errors"
 	"awesomeProject/internal/domain/auth"
-	"awesomeProject/internal/domain/auth/model"
+	auth_model "awesomeProject/internal/domain/auth/model"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"
 	"github.com/gin-gonic/gin"

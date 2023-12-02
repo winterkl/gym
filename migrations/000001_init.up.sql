@@ -22,6 +22,7 @@ create table if not exists trainers
     member_id integer not null
         constraint trainer_members_id_fk
             references members
+            on delete cascade
 );
 
 -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ -- АБОНЕМЕНТЫ --

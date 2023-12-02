@@ -2,9 +2,9 @@ package v1
 
 import (
 	"awesomeProject/internal/app_errors"
-	"awesomeProject/internal/domain/auth/model"
+	auth_model "awesomeProject/internal/domain/auth/model"
 	"awesomeProject/internal/domain/trainer"
-	"awesomeProject/internal/domain/trainer/model"
+	trainer_model "awesomeProject/internal/domain/trainer/model"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -29,13 +29,9 @@ func NewTrainerRouter(handler *gin.RouterGroup, trainerUC trainer.UseCase) {
 }
 
 func (r *trainerRoutes) createTrainer(ctx *gin.Context) {
-	member := ctx.Value("member").(auth_model.MemberPayload)
+	member := ctx.Value("Member").(auth_model.MemberPayload)
 	trainerDTO := trainer_model.CreateTrainerDTO{
 		MemberID: member.ID,
-	}
-	if err := ctx.ShouldBindJSON(&trainerDTO); err != nil {
-		response.SendValidErrorRequest(ctx, err.Error())
-		return
 	}
 	if err := r.trainerUC.CreateTrainer(ctx, trainerDTO); err != nil {
 		handleTrainerError(ctx, err)
