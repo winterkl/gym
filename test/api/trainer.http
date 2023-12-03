@@ -12,5 +12,5 @@ GET http://localhost:3000/v1/trainer-list
 Authorization: {{token}}
 
 ### Удалить тренера
-DELETE http://localhost:3000/v1/trainer-list/2
+DELETE http://localhost:3000/v1/trainer-list/1
 Authorization: {{token}}

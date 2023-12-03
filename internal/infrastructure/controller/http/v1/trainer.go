@@ -3,8 +3,10 @@ package v1
 import (
 	"awesomeProject/internal/app_errors"
 	auth_model "awesomeProject/internal/domain/auth/model"
+	member_entity "awesomeProject/internal/domain/member/entity"
 	"awesomeProject/internal/domain/trainer"
 	trainer_model "awesomeProject/internal/domain/trainer/model"
+	"awesomeProject/internal/infrastructure/controller/http/middleware"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -21,10 +23,10 @@ func NewTrainerRouter(handler *gin.RouterGroup, trainerUC trainer.UseCase) {
 	}
 	trainerList := handler.Group("/trainer-list")
 	{
-		trainerList.POST("", r.createTrainer)
+		trainerList.POST("", r.createTrainer, middleware.CheckRole([]int{member_entity.RoleAdmin}))
 		trainerList.GET("/:id", r.getTrainer)
 		trainerList.GET("", r.getTrainerList)
-		trainerList.DELETE("/:id", r.deleteTrainer)
+		trainerList.DELETE("/:id", r.deleteTrainer, middleware.CheckRole([]int{member_entity.RoleAdmin}))
 	}
 }
 

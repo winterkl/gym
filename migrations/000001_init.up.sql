@@ -1,3 +1,21 @@
+-- РОЛИ -- РОЛИ -- РОЛИ -- РОЛИ --
+
+create table if not exists roles
+(
+    id        serial
+        constraint roles_pk
+            primary key,
+    code_name varchar(10) not null
+        constraint roles_pk2
+            unique,
+    title     varchar(50) not null
+        constraint roles_pk3
+            unique
+);
+INSERT INTO roles (id, code_name, title) VALUES (1, 'admin', 'Администратор');
+INSERT INTO roles (id, code_name, title) VALUES (2, 'trainer', 'Тренер');
+INSERT INTO roles (id, code_name, title) VALUES (3, 'member', 'Участник');
+
 -- УЧАСТНИКИ -- УЧАСТНИКИ -- УЧАСТНИКИ -- УЧАСТНИКИ --
 
 create table if not exists members
@@ -9,7 +27,10 @@ create table if not exists members
         constraint members_pk2
             unique,
     password varchar(32)  not null,
-    fio varchar(100) not null
+    fio varchar(100) not null,
+    role_id  integer      not null
+        constraint users_roles_id_fk
+            references roles
 );
 
 -- ТРЕНЕРЫ -- ТРЕНЕРЫ -- ТРЕНЕРЫ -- ТРЕНЕРЫ --

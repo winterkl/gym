@@ -12,6 +12,10 @@ type GetMemberDTO struct {
 	ID    int    `json:"id"`
 	Login string `json:"login"`
 	FIO   string `json:"fio"`
+	Role  struct {
+		ID    int    `json:"id"`
+		Title string `json:"title"`
+	} `json:"role"`
 }
 
 func NewCreateMemberDTO(login, password, fio string) CreateMemberDTO {
@@ -26,6 +30,13 @@ func NewGetMemberResponse(member member_entity.Member) GetMemberDTO {
 		ID:    member.ID,
 		Login: member.Login,
 		FIO:   member.FIO,
+		Role: struct {
+			ID    int    `json:"id"`
+			Title string `json:"title"`
+		}{
+			ID:    member.RoleID,
+			Title: member.Role.Title,
+		},
 	}
 }
 func NewGetMemberListResponse(memberList []member_entity.Member) []GetMemberDTO {

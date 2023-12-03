@@ -2,6 +2,7 @@ package trainer_repository
 
 import (
 	"awesomeProject/internal/app_errors"
+	member_entity "awesomeProject/internal/domain/member/entity"
 	trainer_entity "awesomeProject/internal/domain/trainer/entity"
 	"awesomeProject/pkg/postgres"
 	"context"
@@ -9,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/jackc/pgconn"
+	"github.com/uptrace/bun"
 )
 
 type TrainerRepository struct {
@@ -22,11 +24,21 @@ func NewTrainerRepository(db *postgres.Postgres) *TrainerRepository {
 }
 
 func (r *TrainerRepository) CreateTrainer(ctx context.Context, trainer trainer_entity.Trainer) error {
-	if err := r.db.NewInsert().Model(&trainer).Scan(ctx); err != nil {
-		if pgErr := err.(*pgconn.PgError); pgErr.Code == r.db.Errors.CodeUniqueConstraint {
-			return &app_errors.TrainerAlreadyExists{MemberID: trainer.MemberID}
+	err := r.db.RunInTx(ctx, nil, func(ctx context.Context, tx bun.Tx) error {
+		if err := tx.NewInsert().Model(&trainer).Scan(ctx); err != nil {
+			if pgErr := err.(*pgconn.PgError); pgErr.Code == r.db.Errors.CodeUniqueConstraint {
+				return &app_errors.TrainerAlreadyExists{MemberID: trainer.MemberID}
+			}
+			return fmt.Errorf("TrainerRepository - CreateTrainer - NewInsert: %w", err)
 		}
-		return fmt.Errorf("TrainerRepository - CreateTrainer - NewInsert: %w", err)
+		if _, err := tx.NewUpdate().Model((*member_entity.Member)(nil)).Set("role_id = ?", member_entity.RoleTrainer).
+			Where("id = ?", trainer.MemberID).Exec(ctx); err != nil {
+			return fmt.Errorf("TrainerRepository - CreateTrainer - NewUpdate: %w", err)
+		}
+		return nil
+	})
+	if err != nil {
+		return err
 	}
 	return nil
 }
@@ -49,9 +61,20 @@ func (r *TrainerRepository) GetTrainerList(ctx context.Context) ([]trainer_entit
 	return trainerList, nil
 }
 func (r *TrainerRepository) DeleteTrainer(ctx context.Context, trainerID int) error {
-	if _, err := r.db.NewDelete().Model((*trainer_entity.Trainer)(nil)).
-		Where("id = ?", trainerID).Exec(ctx); err != nil {
-		return fmt.Errorf("TrainerRepository - DeleteTrainer - NewDelete: %w", err)
+	err := r.db.RunInTx(ctx, nil, func(ctx context.Context, tx bun.Tx) error {
+		var memberID int
+		if _, err := tx.NewDelete().Model((*trainer_entity.Trainer)(nil)).
+			Where("id = ?", trainerID).Returning("member_id").Exec(ctx, &memberID); err != nil {
+			return fmt.Errorf("TrainerRepository - DeleteTrainer - NewDelete: %w", err)
+		}
+		if _, err := tx.NewUpdate().Model((*member_entity.Member)(nil)).Set("role_id = ?", member_entity.RoleMember).
+			Where("id = ?", memberID).Exec(ctx); err != nil {
+			return fmt.Errorf("TrainerRepository - DeleteTrainer - NewUpdate: %w", err)
+		}
+		return nil
+	})
+	if err != nil {
+		return err
 	}
 	return nil
 }

@@ -3,7 +3,9 @@ package v1
 import (
 	"awesomeProject/internal/app_errors"
 	"awesomeProject/internal/domain/member"
+	member_entity "awesomeProject/internal/domain/member/entity"
 	member_model "awesomeProject/internal/domain/member/model"
+	"awesomeProject/internal/infrastructure/controller/http/middleware"
 	"awesomeProject/internal/infrastructure/controller/http/response"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -21,7 +23,7 @@ func NewMemberRouter(handler *gin.RouterGroup, memberUC member.UseCase) {
 	memberList := handler.Group("/member-list")
 	{
 		memberList.POST("", r.createMember)
-		memberList.GET("", r.getMemberList)
+		memberList.GET("", r.getMemberList, middleware.CheckRole([]int{member_entity.RoleAdmin, member_entity.RoleTrainer}))
 		memberList.GET("/:id", r.getMember)
 		memberList.PUT("/:id", r.updateMember)
 		memberList.DELETE("/:id", r.deleteMember)

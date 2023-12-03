@@ -56,5 +56,5 @@ func (uc *AuthUseCase) SignIn(ctx context.Context, dto auth_model.SignInInputDTO
 		return auth_model.SignInOutputDTO{}, fmt.Errorf("AuthUseCase - SignIn - jwtAuth.GenerateToken: %w", err)
 	}
 
-	return auth_model.NewSignInOutputDTO(member.ID, member.Login, member.FIO, token), nil
+	return auth_model.NewSignInOutputDTO(member.ID, member.Role.ID, member.Login, member.FIO, token), nil
 }

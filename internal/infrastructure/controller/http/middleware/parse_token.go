@@ -36,7 +36,7 @@ func ParseToken(jwtAuth auth.JwtAuth, memberUC member.UseCase) gin.HandlerFunc {
 			return
 		}
 
-		memberPayload := auth_model.NewMemberPayload(member.ID, member.Login, member.FIO)
+		memberPayload := auth_model.NewMemberPayload(member.ID, member.Role.ID, member.Login, member.FIO)
 		ctx.Set("Member", memberPayload)
 
 		ctx.Next()

@@ -5,6 +5,8 @@ type Member struct {
 	Login    string
 	Password string
 	FIO      string
+	RoleID   int
+	Role     Role `bun:"rel:belongs-to,join:role_id=id"`
 }
 
 func NewMemberFromCreate(login, password, fio string) Member {
@@ -12,6 +14,7 @@ func NewMemberFromCreate(login, password, fio string) Member {
 		Login:    login,
 		Password: password,
 		FIO:      fio,
+		RoleID:   RoleMember,
 	}
 }
 func NewMemberFromUpdate(memberID int, password, fio string) Member {
