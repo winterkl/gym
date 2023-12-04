@@ -23,10 +23,11 @@ func NewMemberRouter(handler *gin.RouterGroup, memberUC member.UseCase) {
 	memberList := handler.Group("/member-list")
 	{
 		memberList.POST("", r.createMember)
-		memberList.GET("", r.getMemberList, middleware.CheckRole([]int{member_entity.RoleAdmin, member_entity.RoleTrainer}))
+		memberList.GET("", middleware.CheckRole([]int{member_entity.RoleAdmin, member_entity.RoleTrainer}), r.getMemberList)
 		memberList.GET("/:id", r.getMember)
 		memberList.PUT("/:id", r.updateMember)
 		memberList.DELETE("/:id", r.deleteMember)
+		memberList.PUT("/:id/role", middleware.CheckRole([]int{member_entity.RoleAdmin}), r.updateRole)
 	}
 }
 
@@ -87,6 +88,26 @@ func (r *memberRoutes) deleteMember(ctx *gin.Context) {
 		return
 	}
 	if err = r.memberUC.DeleteMember(ctx, memberID); err != nil {
+		handleMemberError(ctx, err)
+		return
+	}
+	response.SendOkRequest(ctx)
+}
+
+// Метод для админа
+
+func (r *memberRoutes) updateRole(ctx *gin.Context) {
+	memberID, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		response.SendValidErrorRequest(ctx, err)
+		return
+	}
+	memberDTO := member_model.UpdateRoleDTO{ID: memberID}
+	if err = ctx.ShouldBindJSON(&memberDTO); err != nil {
+		response.SendValidErrorRequest(ctx, err)
+		return
+	}
+	if err = r.memberUC.UpdateRole(ctx, memberDTO); err != nil {
 		handleMemberError(ctx, err)
 		return
 	}

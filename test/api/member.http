@@ -17,5 +17,15 @@ Authorization: {{token}}
 }
 
 ### Удалить участника
-DELETE http://localhost:3000/v1/member-list/2
+DELETE http://localhost:3000/v1/member-list/1
 Authorization: {{token}}
+
+### Обновить роль
+PUT http://localhost:3000/v1/admin-list
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "id" : 1,
+  "role_id": 2
+}

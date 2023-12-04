@@ -13,6 +13,6 @@ POST http://localhost:3000/v1/auth/sign-in
 Content-Type: application/json
 
 {
-  "login": "iheu",
+  "login": "winterkl",
   "password": "d8578edf8458ce06fbc5bb76a58c5ca4"
 }

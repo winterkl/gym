@@ -67,3 +67,12 @@ func (uc *MemberUseCase) GetMemberByAuthData(ctx context.Context, login string, 
 	}
 	return member_model.NewGetMemberResponse(member), nil
 }
+
+// Метод для админа
+
+func (uc *MemberUseCase) UpdateRole(ctx context.Context, dto member_model.UpdateRoleDTO) error {
+	if err := uc.memberRepo.UpdateRole(ctx, dto.ID, dto.RoleID); err != nil {
+		return fmt.Errorf("MemberUseCase - UpdateRole - memberRepo.UpdateRole: %w", err)
+	}
+	return nil
+}

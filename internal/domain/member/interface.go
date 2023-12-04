@@ -14,6 +14,9 @@ type UseCase interface {
 	UpdateMember(ctx context.Context, member member_model.UpdateMemberDTO) error
 	DeleteMember(ctx context.Context, memberID int) error
 	GetMemberByAuthData(ctx context.Context, login string, password string) (member_model.GetMemberDTO, error)
+
+	// Метод для админа
+	UpdateRole(ctx context.Context, dto member_model.UpdateRoleDTO) error
 }
 
 type Repository interface {
@@ -24,4 +27,7 @@ type Repository interface {
 	UpdateMember(ctx context.Context, member member_entity.Member) error
 	DeleteMember(ctx context.Context, memberID int) error
 	GetMemberByAuthData(ctx context.Context, login string, password string) (member_entity.Member, error)
+
+	// Метод для админа
+	UpdateRole(ctx context.Context, ID, roleID int) error
 }

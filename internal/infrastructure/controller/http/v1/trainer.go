@@ -2,7 +2,6 @@ package v1
 
 import (
 	"awesomeProject/internal/app_errors"
-	auth_model "awesomeProject/internal/domain/auth/model"
 	member_entity "awesomeProject/internal/domain/member/entity"
 	"awesomeProject/internal/domain/trainer"
 	trainer_model "awesomeProject/internal/domain/trainer/model"
@@ -23,7 +22,7 @@ func NewTrainerRouter(handler *gin.RouterGroup, trainerUC trainer.UseCase) {
 	}
 	trainerList := handler.Group("/trainer-list")
 	{
-		trainerList.POST("", r.createTrainer, middleware.CheckRole([]int{member_entity.RoleAdmin}))
+		trainerList.POST("/:id", r.createTrainer, middleware.CheckRole([]int{member_entity.RoleAdmin}))
 		trainerList.GET("/:id", r.getTrainer)
 		trainerList.GET("", r.getTrainerList)
 		trainerList.DELETE("/:id", r.deleteTrainer, middleware.CheckRole([]int{member_entity.RoleAdmin}))
@@ -31,11 +30,13 @@ func NewTrainerRouter(handler *gin.RouterGroup, trainerUC trainer.UseCase) {
 }
 
 func (r *trainerRoutes) createTrainer(ctx *gin.Context) {
-	member := ctx.Value("Member").(auth_model.MemberPayload)
-	trainerDTO := trainer_model.CreateTrainerDTO{
-		MemberID: member.ID,
+	memberID, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		response.SendValidErrorRequest(ctx, err)
+		return
 	}
-	if err := r.trainerUC.CreateTrainer(ctx, trainerDTO); err != nil {
+	trainerDTO := trainer_model.CreateTrainerDTO{MemberID: memberID}
+	if err = r.trainerUC.CreateTrainer(ctx, trainerDTO); err != nil {
 		handleTrainerError(ctx, err)
 		return
 	}

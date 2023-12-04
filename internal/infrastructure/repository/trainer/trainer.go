@@ -31,9 +31,8 @@ func (r *TrainerRepository) CreateTrainer(ctx context.Context, trainer trainer_e
 			}
 			return fmt.Errorf("TrainerRepository - CreateTrainer - NewInsert: %w", err)
 		}
-		if _, err := tx.NewUpdate().Model((*member_entity.Member)(nil)).Set("role_id = ?", member_entity.RoleTrainer).
-			Where("id = ?", trainer.MemberID).Exec(ctx); err != nil {
-			return fmt.Errorf("TrainerRepository - CreateTrainer - NewUpdate: %w", err)
+		if err := r.updateRole(ctx, tx, trainer.MemberID, member_entity.RoleTrainer); err != nil {
+			return err
 		}
 		return nil
 	})
@@ -42,6 +41,15 @@ func (r *TrainerRepository) CreateTrainer(ctx context.Context, trainer trainer_e
 	}
 	return nil
 }
+
+func (r *TrainerRepository) updateRole(ctx context.Context, tx bun.Tx, memberID, roleID int) error {
+	if _, err := tx.NewUpdate().Model((*member_entity.Member)(nil)).Set("role_id = ?", roleID).
+		Where("id = ?", memberID).Exec(ctx); err != nil {
+		return fmt.Errorf("TrainerRepository - updateRole - NewUpdate: %w", err)
+	}
+	return nil
+}
+
 func (r *TrainerRepository) GetTrainer(ctx context.Context, trainerID int) (trainer_entity.Trainer, error) {
 	var trainer trainer_entity.Trainer
 	if err := r.db.NewSelect().Model(&trainer).Relation("Member").
@@ -67,9 +75,8 @@ func (r *TrainerRepository) DeleteTrainer(ctx context.Context, trainerID int) er
 			Where("id = ?", trainerID).Returning("member_id").Exec(ctx, &memberID); err != nil {
 			return fmt.Errorf("TrainerRepository - DeleteTrainer - NewDelete: %w", err)
 		}
-		if _, err := tx.NewUpdate().Model((*member_entity.Member)(nil)).Set("role_id = ?", member_entity.RoleMember).
-			Where("id = ?", memberID).Exec(ctx); err != nil {
-			return fmt.Errorf("TrainerRepository - DeleteTrainer - NewUpdate: %w", err)
+		if err := r.updateRole(ctx, tx, memberID, member_entity.RoleMember); err != nil {
+			return err
 		}
 		return nil
 	})

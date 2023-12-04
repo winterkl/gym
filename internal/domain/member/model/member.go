@@ -52,3 +52,8 @@ type UpdateMemberDTO struct {
 	Password string `json:"password"`
 	FIO      string `json:"fio"`
 }
+
+type UpdateRoleDTO struct {
+	ID     int
+	RoleID int `json:"role_id"`
+}

@@ -53,7 +53,7 @@ func (app *App) Run() {
 
 	useCaseList := v1.UC{
 		MemberUC:  memberUC,
-		TrainerUC: trainer_usecase.NewTrainerUseCase(trainerRepo),
+		TrainerUC: trainer_usecase.NewTrainerUseCase(trainerRepo, memberRepo),
 		AuthUC:    auth_usecase.NewAuthUseCase(memberUC, jwtAuth),
 	}
 

@@ -1,6 +1,7 @@
 package trainer_usecase
 
 import (
+	"awesomeProject/internal/domain/member"
 	"awesomeProject/internal/domain/trainer"
 	trainer_entity "awesomeProject/internal/domain/trainer/entity"
 	trainer_model "awesomeProject/internal/domain/trainer/model"
@@ -10,11 +11,13 @@ import (
 
 type TrainerUseCase struct {
 	trainerRepo trainer.Repository
+	memberRepo  member.Repository
 }
 
-func NewTrainerUseCase(trainerRepo trainer.Repository) *TrainerUseCase {
+func NewTrainerUseCase(trainerRepo trainer.Repository, memberRepo member.Repository) *TrainerUseCase {
 	return &TrainerUseCase{
 		trainerRepo: trainerRepo,
+		memberRepo:  memberRepo,
 	}
 }
 
