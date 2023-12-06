@@ -2,11 +2,13 @@ package app
 
 import (
 	"awesomeProject/config"
-	"awesomeProject/internal/domain/auth/usecase"
-	"awesomeProject/internal/domain/member/usecase"
+	auth_usecase "awesomeProject/internal/domain/auth/usecase"
+	member_usecase "awesomeProject/internal/domain/member/usecase"
+	subscription_usecase "awesomeProject/internal/domain/subscription/usecase"
 	trainer_usecase "awesomeProject/internal/domain/trainer/usecase"
 	v1 "awesomeProject/internal/infrastructure/controller/http/v1"
 	"awesomeProject/internal/infrastructure/repository/member"
+	subscription_repository "awesomeProject/internal/infrastructure/repository/subscription"
 	"awesomeProject/internal/infrastructure/repository/trainer"
 	"awesomeProject/pkg/http_server"
 	"awesomeProject/pkg/jwt_auth"
@@ -44,6 +46,7 @@ func (app *App) Run() {
 	// Инициализация Repository
 	memberRepo := member_repository.NewMemberRepository(app.db)
 	trainerRepo := trainer_repository.NewTrainerRepository(app.db)
+	subscriptionRepo := subscription_repository.NewSubscriptionRepository(app.db)
 
 	// Инициализация пакета JWT
 	jwtAuth := jwt_auth.NewJwtAuth(app.jwtAuthKey)
@@ -52,9 +55,10 @@ func (app *App) Run() {
 	memberUC := member_usecase.NewMemberUseCase(memberRepo)
 
 	useCaseList := v1.UC{
-		MemberUC:  memberUC,
-		TrainerUC: trainer_usecase.NewTrainerUseCase(trainerRepo, memberRepo),
-		AuthUC:    auth_usecase.NewAuthUseCase(memberUC, jwtAuth),
+		MemberUC:       memberUC,
+		TrainerUC:      trainer_usecase.NewTrainerUseCase(trainerRepo, memberRepo),
+		AuthUC:         auth_usecase.NewAuthUseCase(memberUC, jwtAuth),
+		SubscriptionUC: subscription_usecase.NewSubscriptionUseCase(subscriptionRepo),
 	}
 
 	// Инициализация Router

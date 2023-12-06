@@ -1,0 +1,35 @@
+### Создать абонемент
+POST http://localhost:3000/v1/subscription-list/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "title": "Полугодовой",
+  "duration": 180,
+  "ruble": 600,
+  "penny": 99
+}
+
+### Получить абонемент
+GET http://localhost:3000/v1/subscription-list/1
+Authorization: {{token}}
+
+### Получить список абонементов
+GET http://localhost:3000/v1/subscription-list
+Authorization: {{token}}
+
+### Обновить абонемент
+PUT http://localhost:3000/v1/subscription-list/2
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "title": "Месячный",
+  "duration": 30,
+  "ruble": 300,
+  "penny": 0
+}
+
+### Удалить абонемент
+DELETE http://localhost:3000/v1/subscription-list/1
+Authorization: {{token}}

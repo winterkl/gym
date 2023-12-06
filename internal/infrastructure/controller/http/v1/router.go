@@ -3,15 +3,17 @@ package v1
 import (
 	"awesomeProject/internal/domain/auth"
 	"awesomeProject/internal/domain/member"
+	"awesomeProject/internal/domain/subscription"
 	"awesomeProject/internal/domain/trainer"
 	v1 "awesomeProject/internal/infrastructure/controller/http/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 type UC struct {
-	MemberUC  member.UseCase
-	TrainerUC trainer.UseCase
-	AuthUC    auth.UseCase
+	MemberUC       member.UseCase
+	TrainerUC      trainer.UseCase
+	AuthUC         auth.UseCase
+	SubscriptionUC subscription.UseCase
 }
 
 func NewRouter(handler *gin.Engine, uc UC, jwtAuth auth.JwtAuth) {
@@ -22,5 +24,6 @@ func NewRouter(handler *gin.Engine, uc UC, jwtAuth auth.JwtAuth) {
 	{
 		NewTrainerRouter(h, uc.TrainerUC)
 		NewMemberRouter(h, uc.MemberUC)
+		NewSubscriptionRouter(h, uc.SubscriptionUC)
 	}
 }
