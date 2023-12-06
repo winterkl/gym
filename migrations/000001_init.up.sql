@@ -61,6 +61,21 @@ create table if not exists subscriptions
     penny    integer     not null
 );
 
+-- УСЛУГИ -- УСЛУГИ -- УСЛУГИ -- УСЛУГИ --
+
+create table if not exists services
+(
+    id       serial
+        constraint service_pk
+            primary key,
+    title    varchar(50) not null,
+    duration integer     not null,
+    ruble    integer     not null,
+    penny    integer     not null,
+    constraint service_pk2
+        unique (title, duration)
+);
+
 -- АБОНЕМЕНТЫ УЧАСТНИКОВ -- АБОНЕМЕНТЫ УЧАСТНИКОВ -- АБОНЕМЕНТЫ УЧАСТНИКОВ -- АБОНЕМЕНТЫ УЧАСТНИКОВ --
 
 create table if not exists member_subscriptions

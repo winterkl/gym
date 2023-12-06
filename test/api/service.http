@@ -1,0 +1,33 @@
+### Создать услугу
+POST http://localhost:3000/v1/service-list/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "title": "Групповая тренировка",
+  "duration": 1,
+  "ruble": 300
+}
+
+### Получить услугу
+GET http://localhost:3000/v1/service-list/1
+Authorization: {{token}}
+
+### Получить список услуг
+GET http://localhost:3000/v1/service-list
+Authorization: {{token}}
+
+### Обновить услугу
+PUT http://localhost:3000/v1/service-list/2
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "title": "Массаж",
+  "duration": 1,
+  "ruble": 400
+}
+
+### Удалить услугу
+DELETE http://localhost:3000/v1/service-list/2
+Authorization: {{token}}
